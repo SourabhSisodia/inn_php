@@ -51,25 +51,32 @@ if (isset($_POST["submit"])) {
         <input type="file" name="fileImg" required accept=".jpg,.jpeg,.png" />
         <br />
         <br />
+        <label for="w3review">Review of W3Schools:</label>
+
+        <textarea id="w3review" name="w3review" rows="4" cols="50">
+At w3schools.com you will learn how to make a website. They offer free tutorials in all web development technologies.
+</textarea>
+        <br />
+        <br />
         <input type="submit" value="submit" name="submit">
 
-        <?php
-        if (empty($fullName)) {
 
-        } else {
+    </form>
+    <?php
+    if (empty($fullName)) {
 
-            ?>
-            <img src="<?php echo
-                "$file_path" ?>" alt="" srcset="" style="display:block;width:600px;height:300px; margin-top:10px;">
-            <?php
-            echo "
-            <h1>Tumhara Naam $fullName hain</h1>";
-
-        }
+    } else {
 
         ?>
-    </form>
+        <img src="<?php echo
+            "$file_path" ?>" alt="" srcset="" style="display:block;width:600px;height:300px; margin-top:10px;">
+        <?php
+        echo "
+            <h1>Tumhara Naam $fullName hain</h1>";
 
+    }
+
+    ?>
 </body>
 
 </html>
