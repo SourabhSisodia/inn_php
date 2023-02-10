@@ -2,8 +2,8 @@
 
 // starts the session
 session_start();
-
 // connection to database
+include "user.php";
 try {
     include "connection.php";
 } catch (error) {
@@ -25,34 +25,14 @@ if (!isset($_POST["email"]) && !isset($_POST["password"])) {
 $email = $_POST["email"];
 $password = $_POST["password"];
 
-// try querying sql database if successful perform operations else redirect
-try {
-    $sql = "SELECT `Email`, `password` FROM `user` WHERE `Email`='$email';";
-    $result = mysqli_query($conn, $sql);
+$user = new User($email, $password, $conn);
 
-} catch (error) {
-    header("Location: ./index.php?message=error_in_database");
-}
+$message = $user->check_user();
 
-// check if email exists or not
-if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-
-    // checks if password is correct or not
-    if ($password != $row["password"]) {
-        header("Location: ./index.php?message=cannot_login_wrong_password");
-
-    } else {
-        // sets the user variable in session and redirects to welcome page
-        $_SESSION["user"] = $email;
-        header("Location: ./welcome.php");
-    }
-
-
+if ($message == "success") {
+    header("Location: ./welcome.php");
 } else {
-    header("Location: ./index.php?message=cannot_login_wrong_email_or_wrong_password");
-
+    header("Location: ./index.php?message=$message");
 }
-
 
 ?>
